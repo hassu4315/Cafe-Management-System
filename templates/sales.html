@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h3 class="mb-3">Daily Sales Report</h3>
+
+<form method="POST" class="mb-3">
+    <label><b>Select Date:</b></label>
+    <input type="date" name="date" value="{{ date }}" required>
+    <button class="btn btn-dark btn-sm">View</button>
+</form>
+
+<h4>Total Revenue (₹): {{ day_total }}</h4>
+
+<hr>
+
+<table class="table table-bordered table-striped mt-3">
+    <thead class="table-dark">
+        <tr>
+            <th>Bill ID</th>
+            <th>Amount (₹)</th>
+            <th>Time</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for b in data %}
+        <tr>
+            <td>{{ b[0] }}</td>
+            <td>{{ b[1] }}</td>
+            <td>{{ b[2] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

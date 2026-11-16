@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+/* LIGHT MODE DEFAULT */
+body {
+    background: #f8f9fa;
+    color: #212529;
+}
+
+/* DARK MODE */
+.darkmode body {
+    background: #121212 !important;
+    color: #e5e5e5 !important;
+}
+
+.darkmode .card {
+    background: #1e1e1e !important;
+    border-color: #333 !important;
+    color: #e5e5e5 !important;
+}
+
+.darkmode .table {
+    color: #fff;
+}
+
+.darkmode .table-dark {
+    background: #222 !important;
+}
+
+.darkmode .navbar {
+    background: #222 !important;
+}
+
+.darkmode .btn-dark {
+    background: #333 !important;
+    border-color: #444 !important;
+}
+
+.darkmode .btn-outline-dark {
+    border-color: #bbb !important;
+    color: #ddd !important;
+}
+
+.darkmode input, 
+.darkmode select, 
+.darkmode textarea {
+    background: #222 !important;
+    color: #fff !important;
+    border-color: #444 !important;
+}
+</style>
+
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg mb-4">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/dashboard">☕︎ 𝐑𝐎𝐘𝐀𝐋 𝐂𝐀𝐅𝐄 𝐀𝐃𝐌𝐈𝐍</a>
+
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="nav">
+            <ul class="navbar-nav ms-auto">
+
+                {% if session.get("user") %}
+                <li class="nav-item"><a class="nav-link" href="/items">Items</a></li>
+                <li class="nav-item"><a class="nav-link" href="/categories">Categories</a></li>
+                <li class="nav-item"><a class="nav-link" href="/pos">Order</a></li>
+                <li class="nav-item"><a class="nav-link" href="/bills">Bill History</a></li>
+                <li class="nav-item"><a class="nav-link" href="/sales">Sales Report</a></li>
+                <li class="nav-item"><a class="nav-link" href="/sales-range">Date Range Sales</a></li>
+                <li class="nav-item"><a class="nav-link" href="/analytics">Analytics</a></li>
+                <li class="nav-item">
+    <button id="themeToggle" class="btn btn-sm btn-outline-light ms-3">🌙 Dark Mode</button>
+</li>
+
+                <li class="nav-item"><a class="nav-link text-danger" href="/logout">Logout</a></li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const body = document.documentElement;
+
+    function applyTheme(mode) {
+        if (mode === "dark") {
+            body.classList.add("darkmode");
+            document.getElementById("themeToggle").innerText = "☀️ Light Mode";
+        } else {
+            body.classList.remove("darkmode");
+            document.getElementById("themeToggle").innerText = "🌙 Dark Mode";
+        }
+    }
+
+    // Load saved mode
+    const savedMode = localStorage.getItem("theme") || "light";
+    applyTheme(savedMode);
+
+    // Toggle
+    document.getElementById("themeToggle").addEventListener("click", () => {
+        const newMode = body.classList.contains("darkmode") ? "light" : "dark";
+        localStorage.setItem("theme", newMode);
+        applyTheme(newMode);
+    });
+</script>
+
+</body>
+</html>

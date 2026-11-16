@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h3 class="mb-4">Bill History</h3>
+
+<table class="table table-bordered table-striped shadow-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Total (₹)</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for b in bills %}
+        <tr>
+            <td>{{ b[0] }}</td>
+            <td>{{ b[1] }}</td>
+            <td>{{ b[2] }}</td>
+            <td>
+                <a href="/invoice/{{ b[0] }}" class="btn btn-sm btn-primary">View</a>
+                <a href="/invoice/{{ b[0] }}/pdf" class="btn btn-sm btn-dark">PDF</a>
+                <a href="/slip/{{ b[0] }}" class="btn btn-sm btn-warning">Slip</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

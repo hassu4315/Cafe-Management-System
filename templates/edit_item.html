@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h3 class="mb-4">Edit Item</h3>
+
+<form method="POST">
+
+    <div class="mb-3">
+        <label>Name</label>
+        <input class="form-control" name="name" value="{{ item[1] }}">
+    </div>
+
+    <div class="mb-3">
+        <label>Price</label>
+        <input class="form-control" name="price" type="number" step="0.01" value="{{ item[2] }}">
+    </div>
+
+    <div class="mb-3">
+        <label>Category</label>
+        <select class="form-control" name="category">
+            {% for c in categories %}
+                <option value="{{ c[0] }}" {% if c[0] == item[3] %}selected{% endif %}>
+                    {{ c[1] }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button class="btn btn-dark w-100">Save Changes</button>
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h3 class="mb-3">Categories</h3>
+
+<form method="POST" class="row g-2 mb-4">
+    <div class="col-md-4">
+        <input class="form-control" name="name" placeholder="New Category">
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-dark w-100">Add</button>
+    </div>
+</form>
+
+<table class="table table-bordered shadow-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Category Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for cat in categories %}
+        <tr>
+            <td>{{ cat[0] }}</td>
+            <td>{{ cat[1] }}</td>
+            <td>
+                <a href="/categories/edit/{{ cat[0] }}" class="btn btn-sm btn-primary">Edit</a>
+                <a href="/categories/delete/{{ cat[0] }}" class="btn btn-sm btn-danger"
+                    onclick="return confirm('Delete this category?')">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}

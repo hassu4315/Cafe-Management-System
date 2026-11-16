@@ -1,0 +1,113 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h3 class="mb-4">Analytics Dashboard</h3>
+
+<div class="row g-3">
+
+    <!-- TODAY -->
+    <div class="col-md-3 col-6">
+        <div class="card p-3 text-center shadow-sm">
+            <h4>₹{{ today_total }}</h4>
+            <p>Today’s Sales</p>
+        </div>
+    </div>
+
+    <!-- WEEK -->
+    <div class="col-md-3 col-6">
+        <div class="card p-3 text-center shadow-sm">
+            <h4>₹{{ weekly_total }}</h4>
+            <p>Last 7 Days</p>
+        </div>
+    </div>
+
+    <!-- MONTH -->
+    <div class="col-md-3 col-6">
+        <div class="card p-3 text-center shadow-sm">
+            <h4>₹{{ monthly_total }}</h4>
+            <p>This Month</p>
+        </div>
+    </div>
+
+    <!-- TOTAL REVENUE -->
+    <div class="col-md-3 col-6">
+        <div class="card p-3 text-center shadow-sm">
+            <h4>₹{{ total_revenue }}</h4>
+            <p>Total Revenue</p>
+        </div>
+    </div>
+
+</div>
+
+<hr class="my-4">
+
+<h4>Best Selling Items</h4>
+<ul>
+    {% for name, qty in best_items %}
+    <li>{{ name }} — {{ qty }} sold</li>
+    {% endfor %}
+</ul>
+
+<hr>
+
+<h4>Category Sales (Pie Chart)</h4>
+
+<!-- FIXED SIZE WRAPPER (controls the chart size) -->
+<div style="width: 350px; height: 350px;">
+    <canvas id="chart1"></canvas>
+</div>
+
+<h4 class="mt-5">Weekly Revenue (Bar Chart)</h4>
+<canvas id="chart2" height="100"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // CATEGORY SALES CHART
+    const categoryLabels = [
+        {% for name, amount in category_sales %}
+            "{{ name }}",
+        {% endfor %}
+    ];
+
+    const categoryData = [
+        {% for name, amount in category_sales %}
+            {{ amount }},
+        {% endfor %}
+    ];
+
+    new Chart(document.getElementById("chart1"), {
+        type: "pie",
+        options: {
+            responsive: true,
+            maintainAspectRatio: false   // <<< REQUIRED FOR FIXED SIZE
+        },
+        data: {
+            labels: categoryLabels,
+            datasets: [{
+                data: categoryData
+            }]
+        }
+    });
+
+    // WEEKLY BAR CHART
+    new Chart(document.getElementById("chart2"), {
+        type: "bar",
+        data: {
+            labels: ["6 Days Ago", "5", "4", "3", "2", "Yesterday", "Today"],
+            datasets: [{
+                label: "Revenue (₹)",
+                data: [100, 200, 300, 400, 350, 420, 500] // sample data
+            }]
+        }
+    });
+// Apply dark mode colors to charts if needed
+const isDark = document.documentElement.classList.contains("darkmode");
+
+const chartTextColor = isDark ? "#eee" : "#222";
+
+Chart.defaults.color = chartTextColor;
+
+</script>
+
+{% endblock %}
