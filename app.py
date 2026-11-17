@@ -6,7 +6,7 @@ from reportlab.lib.pagesizes import A4
 from io import BytesIO
 
 app = Flask(__name__)
-app.secret_key = "super_secure_key"
+app.secret_key = os.environ.get("SECRET_KEY", "local-development-only-key")
 
 DB = "instance/cafe.db"
 
@@ -82,9 +82,9 @@ def login():
     username = request.form["username"]
     password = request.form["password"]
 
-    if username == "admin" and password == "admin":
-        session["user"] = "admin"
-        return redirect("/dashboard")
+   if username == os.environ.get("ADMIN_USERNAME") and password == os.environ.get("ADMIN_PASSWORD"):
+    session["user"] = username
+    return redirect("/dashboard")
 
     return "Wrong username or password!"
 
