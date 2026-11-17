@@ -82,9 +82,9 @@ def login():
     username = request.form["username"]
     password = request.form["password"]
 
-   if username == os.environ.get("ADMIN_USERNAME") and password == os.environ.get("ADMIN_PASSWORD"):
-    session["user"] = username
-    return redirect("/dashboard")
+    if username == os.environ.get("ADMIN_USERNAME") and password == os.environ.get("ADMIN_PASSWORD"):
+        session["user"] = username
+        return redirect("/dashboard")
 
     return "Wrong username or password!"
 
