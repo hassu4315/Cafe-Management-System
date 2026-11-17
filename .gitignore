@@ -219,8 +219,7 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 # Local database
-instance/
-*.db
+
 
 # Environment and secrets
 .env
