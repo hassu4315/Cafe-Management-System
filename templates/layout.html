@@ -72,6 +72,7 @@ body {
             <ul class="navbar-nav ms-auto">
 
                 {% if session.get("user") %}
+                <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
                 <li class="nav-item"><a class="nav-link" href="/items">Items</a></li>
                 <li class="nav-item"><a class="nav-link" href="/categories">Categories</a></li>
                 <li class="nav-item"><a class="nav-link" href="/pos">Order</a></li>
